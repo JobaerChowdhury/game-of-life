@@ -20,14 +20,6 @@ data Board = Board { boardWidth:: Int,
 emptyBoard :: Board
 emptyBoard = Board {boardWidth = 60, boardHeight = 10, boardCells = M.empty, currentPos = (0,0)}
 
-dummyBoard :: Board
-dummyBoard = Board {
-  boardWidth = 60,
-  boardHeight = 10,
-  boardCells = M.fromList [((1,1), True), ((2,1), True), ((3,1), True), ((3,2), True), ((4,4), True)],
-  currentPos = (0,0)
-  }
-
 moveForward :: Board -> Board
 moveForward b = moveBy b goRight
 
