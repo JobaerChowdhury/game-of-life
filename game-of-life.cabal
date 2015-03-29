@@ -21,7 +21,7 @@ executable game-of-life
   ghc-options:         -Wall
   -- other-modules:       
   -- other-extensions:    
-  build-depends:       base >=4.6 && <4.7,
+  build-depends:       base >=4.6 && <5,
                        ansi-terminal,
                        containers
   hs-source-dirs:      src

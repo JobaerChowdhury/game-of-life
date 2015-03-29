@@ -92,7 +92,7 @@ drawInstructions = do
            SetColor Foreground Vivid Black ]
   putStrLn "\n\nMove by using the WSAD characters"
   putStrLn "Press 'j' to liven a cell. Press 'k' to make it dead."
-  putStrLn "Use 'p' to pause, 'r' to resume, 'z' to restart and 'q' to quit."
+  putStrLn "Press 'q' to quit."
 
 gameLoop :: GameStatus -> IO ()
 gameLoop gs = do
