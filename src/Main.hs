@@ -23,43 +23,61 @@ gameLoop gs = do
 
 handleInput :: GameStatus -> Input -> IO ()
 handleInput gs input = case input of
-    Up ->   do
-      curUp
-      let updatedBoard = moveUp (board gs)
-      let ngs = GameStatus {board = updatedBoard}
-      gameLoop ngs
-    Down -> do
-      curDown
-      let updatedBoard = moveDown (board gs)
-      let ngs = GameStatus {board = updatedBoard}
-      gameLoop ngs
-    Right -> do
-      curRight
-      let updatedBoard = moveForward (board gs)
-      let ngs = GameStatus {board = updatedBoard}
-      gameLoop ngs
-    Left -> do
-      curLeft
-      let updatedBoard = moveBackward (board gs)
-      let ngs = GameStatus {board = updatedBoard}
-      gameLoop ngs
-    Liven -> do
-      drawLiveCell
-      let updatedBoard = makeLive b curPos
-      let ub = moveForward updatedBoard
-      let ngs = GameStatus {board = ub}
-      gameLoop ngs
-      where b = board gs
-            curPos = currentPos b
-    Dead -> do
-      drawDeadCell
-      let updatedBoard = makeDead b curPos
-      let ub = moveForward updatedBoard
-      let ngs = GameStatus {board = ub}
-      gameLoop ngs
-      where b = board gs
-            curPos = currentPos b
-    Start -> runSimulation gs
+    Up      -> upAction gs
+    Down    -> downAction gs
+    Right   -> rightAction gs
+    Left    -> leftAction gs
+    Liven   -> livenAction gs
+    Dead    -> deadAction gs
+    Start   -> runSimulation gs
+
+upAction :: GameStatus -> IO ()
+upAction gs = do
+  curUp
+  let updatedBoard = moveUp (board gs)
+  let ngs = GameStatus {board = updatedBoard}
+  gameLoop ngs
+
+downAction :: GameStatus -> IO ()
+downAction gs = do
+  curDown
+  let updatedBoard = moveDown (board gs)
+  let ngs = GameStatus {board = updatedBoard}
+  gameLoop ngs
+
+rightAction :: GameStatus -> IO ()
+rightAction gs = do
+  curRight
+  let updatedBoard = moveForward (board gs)
+  let ngs = GameStatus {board = updatedBoard}
+  gameLoop ngs
+
+leftAction :: GameStatus -> IO ()
+leftAction gs = do
+  curLeft
+  let updatedBoard = moveBackward (board gs)
+  let ngs = GameStatus {board = updatedBoard}
+  gameLoop ngs
+
+livenAction :: GameStatus -> IO ()
+livenAction gs = do
+  drawLiveCell
+  let updatedBoard = makeLive b curPos
+  let ub = moveForward updatedBoard
+  let ngs = GameStatus {board = ub}
+  gameLoop ngs
+  where b = board gs
+        curPos = currentPos b
+
+deadAction :: GameStatus -> IO ()
+deadAction gs = do
+  drawDeadCell
+  let updatedBoard = makeDead b curPos
+  let ub = moveForward updatedBoard
+  let ngs = GameStatus {board = ub}
+  gameLoop ngs
+  where b = board gs
+        curPos = currentPos b
 
 quitWithMessage :: IO ()
 quitWithMessage = quit "Thanks for playing!"
