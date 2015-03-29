@@ -1,6 +1,5 @@
 module Main where
 
-import qualified Data.Map as M
 import Prelude hiding (Either(..))
 
 import GameInput
@@ -30,33 +29,34 @@ handleInput gs input = case input of
     Liven   -> livenAction gs
     Dead    -> deadAction gs
     Start   -> runSimulation gs
+    _       -> gameLoop gs
 
 upAction :: GameStatus -> IO ()
 upAction gs = do
   curUp
   let updatedBoard = moveUp (board gs)
-  let ngs = GameStatus {board = updatedBoard}
+  let ngs = gs {board = updatedBoard}
   gameLoop ngs
 
 downAction :: GameStatus -> IO ()
 downAction gs = do
   curDown
   let updatedBoard = moveDown (board gs)
-  let ngs = GameStatus {board = updatedBoard}
+  let ngs = gs {board = updatedBoard}
   gameLoop ngs
 
 rightAction :: GameStatus -> IO ()
 rightAction gs = do
   curRight
   let updatedBoard = moveForward (board gs)
-  let ngs = GameStatus {board = updatedBoard}
+  let ngs = gs {board = updatedBoard}
   gameLoop ngs
 
 leftAction :: GameStatus -> IO ()
 leftAction gs = do
   curLeft
   let updatedBoard = moveBackward (board gs)
-  let ngs = GameStatus {board = updatedBoard}
+  let ngs = gs {board = updatedBoard}
   gameLoop ngs
 
 livenAction :: GameStatus -> IO ()
@@ -64,7 +64,7 @@ livenAction gs = do
   drawLiveCell
   let updatedBoard = makeLive b curPos
   let ub = moveForward updatedBoard
-  let ngs = GameStatus {board = ub}
+  let ngs = gs {board = ub}
   gameLoop ngs
   where b = board gs
         curPos = currentPos b
@@ -74,7 +74,7 @@ deadAction gs = do
   drawDeadCell
   let updatedBoard = makeDead b curPos
   let ub = moveForward updatedBoard
-  let ngs = GameStatus {board = ub}
+  let ngs = gs {board = ub}
   gameLoop ngs
   where b = board gs
         curPos = currentPos b
@@ -87,5 +87,5 @@ runSimulation gs = do
   drawGame gs inputInstructions
   pause
   let nb = stepBoard (board gs)
-  let ngs = GameStatus {board = nb}
+  let ngs = gs {board = nb}
   handleCharPress 'q' quitWithMessage (runSimulation ngs)
