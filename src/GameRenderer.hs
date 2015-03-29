@@ -41,12 +41,12 @@ drawLine (x:xs) =
 
 drawLiveCell :: IO ()
 drawLiveCell = do
-  setSGR [SetColor Foreground Vivid Green]
+  setSGR [SetColor Foreground Dull Green]
   putStr "o"
 
 drawDeadCell :: IO ()
 drawDeadCell = do
-  setSGR [SetColor Foreground Vivid Blue]
+  setSGR [SetColor Foreground Dull Blue]
   putStr "-"
 
 curUp :: IO ()

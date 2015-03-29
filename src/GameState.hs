@@ -21,16 +21,16 @@ emptyBoard :: Board
 emptyBoard = Board {boardWidth = 60, boardHeight = 10, boardCells = M.empty, currentPos = (0,0)}
 
 moveForward :: Board -> Board
-moveForward b = moveBy b goRight
+moveForward b = moveBy b rightCell
 
 moveBackward :: Board -> Board
-moveBackward b = moveBy b goLeft
+moveBackward b = moveBy b leftCell
 
 moveUp :: Board -> Board
-moveUp b = moveBy b goUp
+moveUp b = moveBy b upperCell
 
 moveDown :: Board -> Board
-moveDown b = moveBy b goDown
+moveDown b = moveBy b downCell
 
 moveBy :: Board -> (Point -> Point) -> Board
 moveBy b f = b {currentPos = newPos}
@@ -44,36 +44,38 @@ makeDead :: Board -> Point -> Board
 makeDead b p = b {boardCells = M.insert p False bc }
   where bc = boardCells b
 
-goRight :: Point -> Point
-goRight (x,y) = (x+1, y)
+rightCell :: Point -> Point
+rightCell (x,y) = (x+1, y)
 
-goLeft :: Point -> Point
-goLeft (x,y) = (x-1, y)
+leftCell :: Point -> Point
+leftCell (x,y) = (x-1, y)
 
-goUp :: Point -> Point
-goUp (x,y) = (x, y-1)
+upperCell :: Point -> Point
+upperCell (x,y) = (x, y-1)
 
-goDown :: Point -> Point
-goDown (x,y) = (x, y+1)
+downCell :: Point -> Point
+downCell (x,y) = (x, y+1)
 
 stepBoard :: Board -> Board
 stepBoard b = b {boardCells = newCellMap}
   where
-    w         = boardWidth b
-    h         = boardHeight b
     cm        = boardCells b
-    cs        = [(x,y) | x <- [0..(w-1)], y <- [0..(h-1)]] --cells
+    cs        = allPoints b
     ns        = map (countLiveNeighbors b) cs              -- live neighbor counts
     ls        = map (\p -> M.findWithDefault False p cm) cs     -- live or dead state
     newCellMap = M.fromList $ zip cs $ zipWith decideNextState ns ls
 
+allPoints :: Board -> [Point]
+allPoints b = [(x,y) | x <- [0..(w-1)], y <- [0..(h-1)]] --cells
+  where w = boardWidth b
+        h = boardHeight b
+
+
 -- First parameter number of neighbors, second whether the cell is live or dead now
 decideNextState :: Int -> Bool -> Bool
 decideNextState 2 True = True -- live cell with 2 live neighbors maintains life
-decideNextState 3 True = True -- live cell with 3 live neighbors maintians life
-decideNextState _ True = False  -- any other live cell dies of overcrowd or under population
-decideNextState 3 False = True -- dead cell with exactly 3 live neighbors regenerates
-decideNextState _ False = False -- any other dead cells remain dead
+decideNextState 3 _ = True --live cell with 3 live neighbors maintians life, dead cell with 3 live neighbors regenerates
+decideNextState _ _ = False -- any other combination remains dead
 
 countLiveNeighbors :: Board -> Point -> Int
 countLiveNeighbors b p = length $ filter id $ map (\(x,y) -> M.findWithDefault False (x,y) cm) ns
