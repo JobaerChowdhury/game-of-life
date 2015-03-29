@@ -14,18 +14,14 @@ initializePainter title = do
   hSetBuffering stdin  NoBuffering
   hSetBuffering stdout NoBuffering
 
-drawGame :: GameStatus -> IO ()
-drawGame gs = do
+drawGame :: GameStatus -> [String] -> IO ()
+drawGame gs ins = do
   let b = board gs
   clearScreen
   setCursorPosition 0 0
   drawBoard b
   drawInstructions ins
   setCursorPosition 0 0
-  where
-    ins = ["\n\nMove by using the WSAD characters",
-           "Press 'j' to liven a cell. Press 'k' to make it dead.",
-           "Press 'e' to start the simulation and 'q' to quit."]
 
 drawBoard :: Board -> IO ()
 drawBoard b = do

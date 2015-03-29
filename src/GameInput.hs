@@ -24,6 +24,11 @@ getInput = do
     'e' -> return Start
     _ -> getInput
 
+inputInstructions :: [String]
+inputInstructions = ["\n\nMove by using the WSAD characters",
+                "Press 'j' to liven a cell. Press 'k' to make it dead.",
+                "Press 'e' to start the simulation and 'q' to quit."]
+
 ifReadyDo :: Handle -> IO a -> IO (Maybe a)
 ifReadyDo hnd x = hReady hnd >>= f
   where f True = x >>= return . Just

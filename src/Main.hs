@@ -11,7 +11,7 @@ main :: IO ()
 main = do
   let gs = GameStatus {runStatus = Init, board = emptyBoard}
   initializePainter "Game of Life"
-  drawGame gs
+  drawGame gs inputInstructions
   gameLoop gs
 
 gameLoop :: GameStatus -> IO ()
@@ -66,7 +66,7 @@ quitWithMessage = quit "Thanks for playing!"
 
 runSimulation :: GameStatus -> IO ()
 runSimulation gs = do
-  drawGame gs
+  drawGame gs inputInstructions
   pause
   let nb = stepBoard (board gs)
   let ngs = GameStatus {board = nb}
