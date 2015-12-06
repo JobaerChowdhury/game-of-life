@@ -80,7 +80,7 @@ deadAction gs = do
         curPos = currentPos b
 
 quitWithMessage :: IO ()
-quitWithMessage = quit "Thanks for playing!"
+quitWithMessage = quit "Thanks for playing!!"
 
 runSimulation :: GameStatus -> IO ()
 runSimulation gs = do
