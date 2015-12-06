@@ -1,14 +1,14 @@
 name:                game-of-life
 version:             0.1.0.0
-synopsis:            Initial project template from stack
+synopsis:            Game of life simulation in terminal
 description:         Please see README.md
-homepage:            http://github.com/githubuser/game-of-life#readme
+homepage:            http://github.com/JobaerChowdhury/game-of-life
 license:             BSD3
 license-file:        LICENSE
-author:              Author name here
-maintainer:          example@example.com
-copyright:           2010 Author Here
-category:            Web
+author:              Jobaer
+maintainer:          Jobaer
+copyright:           2015 Jobaer
+category:            Terminal
 build-type:          Simple
 -- extra-source-files:
 cabal-version:       >=1.10
