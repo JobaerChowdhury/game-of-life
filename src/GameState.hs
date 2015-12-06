@@ -70,7 +70,6 @@ allPoints b = [(x,y) | x <- [0..(w-1)], y <- [0..(h-1)]] --cells
   where w = boardWidth b
         h = boardHeight b
 
-
 -- First parameter number of neighbors, second whether the cell is live or dead now
 decideNextState :: Int -> Bool -> Bool
 decideNextState 2 True = True -- live cell with 2 live neighbors maintains life

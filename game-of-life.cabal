@@ -5,7 +5,7 @@ name:                game-of-life
 version:             0.1.0.0
 synopsis:            Text based conway's game of life simulation in Haskell.
 description:         Very simple simulation for conway's game of life.
-homepage:            http://github.com/JobaerChowdhury
+homepage:            https://github.com/JobaerChowdhury/game-of-life
 license:             Apache-2.0
 license-file:        LICENSE
 author:              JobaerChowdhury
